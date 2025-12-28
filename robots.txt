@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://mert2802.github.io/MM-Softwareentwicklung-2/sitemap.xml

@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#0b0f14"/>
+      <stop offset="100%" stop-color="#111b28"/>
+    </linearGradient>
+    <linearGradient id="accent" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#00d1b2"/>
+      <stop offset="100%" stop-color="#12f0ca"/>
+    </linearGradient>
+  </defs>
+  <rect width="1200" height="630" fill="url(#bg)"/>
+  <rect x="80" y="80" width="1040" height="470" rx="32" fill="#121a25" stroke="rgba(255,255,255,0.08)"/>
+  <rect x="120" y="140" width="120" height="120" rx="24" fill="url(#accent)"/>
+  <path d="M150 230V170h30l25 40 25-40h30v60h-20v-36l-35 55-35-55v36z" fill="#041514"/>
+  <text x="280" y="200" fill="#e6edf3" font-family="Sora, Arial, sans-serif" font-size="44" font-weight="700">MM Softwareentwicklung</text>
+  <text x="280" y="255" fill="#9aa6b2" font-family="Sora, Arial, sans-serif" font-size="28">Automatisierung & Softwareentwicklung</text>
+  <text x="280" y="320" fill="#9aa6b2" font-family="Sora, Arial, sans-serif" font-size="24">Immobilien ? Startups ? KMU ? Deutschland</text>
+  <rect x="280" y="370" width="360" height="54" rx="12" fill="url(#accent)"/>
+  <text x="300" y="406" fill="#041514" font-family="Sora, Arial, sans-serif" font-size="22" font-weight="700">info@primetimesuites.de</text>
+</svg>
