@@ -832,12 +832,13 @@
               <button class="btn primary" id="copyEmail">E-Mail kopieren</button>
               <a class="btn ghost" href="tel:+4917672762444">Anrufen</a>
             </div>
-            <form class="contact-form" id="contactForm">
+            <form class="contact-form" id="contactForm" action="https://formspree.io/f/xgoelqnl" method="POST">
+              <input type="hidden" name="_subject" value="Neue Anfrage von der Website" />
               <input type="text" name="name" placeholder="Ihr Name" required />
               <input type="email" name="email" placeholder="Ihre E-Mail" required />
               <textarea name="message" placeholder="Kurz Ihr Projekt" required></textarea>
               <button class="btn primary" type="submit">Nachricht senden</button>
-              <span class="form-note">Rueckmeldung innerhalb von 24 Stunden.</span>
+              <span class="form-note">Nach dem Senden ist die Anfrage in Formspree sichtbar.</span>
             </form>
           </div>
         </div>
@@ -873,7 +874,7 @@
           <div>
             <strong>Kontakt</strong>
             <div class="stack">
-              <a href="mailto:info@mmsoftwareentwicklung.de">info@mmsoftwareentwicklung.de</a>
+              <a href="mailto:info@primetimesuites.de">info@primetimesuites.de</a>
               <a href="tel:+4917672762444">+49 176 72762444</a>
             </div>
           </div>
@@ -986,18 +987,11 @@
 
       document.getElementById("copyEmail").addEventListener("click", async () => {
         try {
-          await navigator.clipboard.writeText("info@mmsoftwareentwicklung.de");
+          await navigator.clipboard.writeText("info@primetimesuites.de");
           showToast("E-Mail kopiert");
         } catch (error) {
           showToast("Konnte nicht kopieren");
         }
-      });
-
-      const contactForm = document.getElementById("contactForm");
-      contactForm.addEventListener("submit", (event) => {
-        event.preventDefault();
-        showToast("Nachricht gesendet");
-        contactForm.reset();
       });
 
       const backToTop = document.getElementById("backToTop");
