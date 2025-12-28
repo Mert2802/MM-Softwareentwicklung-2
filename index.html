@@ -1,0 +1,1112 @@
+
+<!doctype html>
+<html lang="de" dir="ltr">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>MM Softwareentwicklung | Dark Studio</title>
+    <meta name="description" content="MM Softwareentwicklung: Software, Apps, Automatisierung und IT-Beratung. Dark, modern, interaktiv." />
+    <meta name="author" content="MM Softwareentwicklung" />
+    <meta name="robots" content="index, follow" />
+    <meta name="theme-color" content="#0b0f14" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <style>
+      :root {
+        --bg: #0b0f14;
+        --bg-2: #0f1520;
+        --panel: #121a25;
+        --panel-2: #162232;
+        --ink: #e6edf3;
+        --muted: #9aa6b2;
+        --accent: #00d1b2;
+        --accent-2: #ff7a59;
+        --accent-3: #7c5cff;
+        --edge: rgba(255, 255, 255, 0.08);
+        --glow: rgba(0, 209, 178, 0.35);
+        --shadow: rgba(0, 0, 0, 0.45);
+      }
+
+      * { box-sizing: border-box; }
+      html { scroll-behavior: smooth; }
+
+      body {
+        margin: 0;
+        font-family: "Sora", "Segoe UI", sans-serif;
+        color: var(--ink);
+        background:
+          radial-gradient(700px 400px at 12% 8%, rgba(0, 209, 178, 0.15), transparent 60%),
+          radial-gradient(900px 500px at 88% 12%, rgba(124, 92, 255, 0.2), transparent 55%),
+          linear-gradient(180deg, var(--bg), var(--bg-2));
+        min-height: 100vh;
+        overflow-x: hidden;
+      }
+
+      body::before {
+        content: "";
+        position: fixed;
+        inset: 0;
+        background:
+          linear-gradient(transparent 94%, rgba(255, 255, 255, 0.03) 94%),
+          linear-gradient(90deg, transparent 94%, rgba(255, 255, 255, 0.03) 94%);
+        background-size: 28px 28px;
+        pointer-events: none;
+        opacity: 0.3;
+        z-index: 0;
+      }
+
+      a { color: inherit; text-decoration: none; }
+      img { max-width: 100%; display: block; }
+
+      .cursor-glow {
+        position: fixed;
+        width: 280px;
+        height: 280px;
+        border-radius: 50%;
+        background: radial-gradient(circle, rgba(0, 209, 178, 0.18), transparent 60%);
+        pointer-events: none;
+        mix-blend-mode: screen;
+        transform: translate(-50%, -50%);
+        z-index: 1;
+        opacity: 0.8;
+      }
+
+      .progress {
+        position: fixed;
+        top: 0;
+        left: 0;
+        height: 3px;
+        background: linear-gradient(90deg, var(--accent), var(--accent-3));
+        width: 0;
+        z-index: 20;
+      }
+
+      .container {
+        width: min(1120px, 92vw);
+        margin: 0 auto;
+        position: relative;
+        z-index: 2;
+      }
+
+      .pill {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        padding: 6px 14px;
+        border-radius: 999px;
+        font-size: 0.72rem;
+        text-transform: uppercase;
+        letter-spacing: 0.18em;
+        color: #b8ffef;
+        border: 1px solid rgba(0, 209, 178, 0.4);
+        background: rgba(0, 209, 178, 0.1);
+      }
+
+      .btn {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 10px;
+        padding: 12px 20px;
+        border-radius: 12px;
+        border: 1px solid var(--edge);
+        font-weight: 600;
+        transition: transform 140ms ease, box-shadow 140ms ease, border-color 140ms ease;
+        background: transparent;
+        color: var(--ink);
+      }
+
+      .btn.primary {
+        background: linear-gradient(120deg, var(--accent), #12f0ca);
+        color: #041514;
+        border-color: transparent;
+        box-shadow: 0 16px 40px rgba(0, 209, 178, 0.25);
+      }
+
+      .btn.ghost {
+        border-color: rgba(124, 92, 255, 0.4);
+        color: #cdbbff;
+      }
+
+      .btn:hover { transform: translateY(-2px); }
+
+      header {
+        position: sticky;
+        top: 0;
+        z-index: 10;
+        backdrop-filter: blur(16px);
+        background: rgba(11, 15, 20, 0.72);
+        border-bottom: 1px solid var(--edge);
+      }
+
+      .nav {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 16px 0;
+      }
+
+      .brand {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        font-weight: 700;
+        font-size: 1.1rem;
+      }
+
+      .brand span {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 38px;
+        height: 38px;
+        border-radius: 12px;
+        background: linear-gradient(135deg, #121a25, #1f2a3c);
+        border: 1px solid var(--edge);
+        color: #b8ffef;
+        font-weight: 700;
+      }
+
+      .nav-links {
+        display: flex;
+        align-items: center;
+        gap: 18px;
+        font-weight: 500;
+      }
+
+      .nav-links a { color: var(--muted); }
+      .nav-links a.active { color: var(--ink); }
+
+      .menu-btn {
+        display: none;
+        background: transparent;
+        border: 0;
+        color: var(--ink);
+        font-size: 1.1rem;
+      }
+
+      .hero {
+        padding: 92px 0 70px;
+        position: relative;
+      }
+
+      .hero-grid {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 40px;
+        align-items: center;
+      }
+
+      .hero h1 {
+        font-size: clamp(2.4rem, 4vw, 3.6rem);
+        margin: 16px 0 12px;
+      }
+
+      .hero p {
+        color: var(--muted);
+        line-height: 1.7;
+        margin: 0 0 22px;
+      }
+
+      .hero-actions {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 14px;
+      }
+
+      .hero-stats {
+        display: flex;
+        gap: 24px;
+        margin-top: 26px;
+      }
+
+      .stat {
+        background: var(--panel);
+        border: 1px solid var(--edge);
+        border-radius: 16px;
+        padding: 12px 16px;
+        min-width: 140px;
+      }
+
+      .stat strong {
+        font-size: 1.2rem;
+        display: block;
+      }
+
+      .hero-card {
+        background: linear-gradient(160deg, rgba(18, 26, 37, 0.9), rgba(18, 32, 52, 0.95));
+        border: 1px solid rgba(255, 255, 255, 0.08);
+        border-radius: 26px;
+        padding: 28px;
+        position: relative;
+        overflow: hidden;
+        box-shadow: 0 20px 50px var(--shadow);
+      }
+
+      .hero-card::before {
+        content: "";
+        position: absolute;
+        inset: -40% -20% auto auto;
+        width: 240px;
+        height: 240px;
+        background: radial-gradient(circle, rgba(255, 122, 89, 0.4), transparent 65%);
+      }
+
+      .hero-terminal {
+        background: rgba(8, 12, 18, 0.9);
+        border: 1px solid rgba(255, 255, 255, 0.08);
+        border-radius: 16px;
+        padding: 14px;
+        margin-top: 18px;
+        font-family: "Courier New", monospace;
+        font-size: 0.9rem;
+        color: #b8ffef;
+        white-space: pre-line;
+      }
+
+      .hero-terminal span { color: #7c5cff; }
+
+      .hero-list {
+        list-style: none;
+        padding: 0;
+        margin: 16px 0 0;
+        display: grid;
+        gap: 12px;
+      }
+
+      .hero-list li {
+        display: flex;
+        gap: 10px;
+        align-items: center;
+      }
+
+      .hero-list span {
+        width: 10px;
+        height: 10px;
+        border-radius: 50%;
+        background: var(--accent-2);
+      }
+
+      section { padding: 70px 0; }
+
+      .section-title {
+        font-size: clamp(1.8rem, 3vw, 2.6rem);
+        margin: 12px 0;
+      }
+
+      .section-subtitle {
+        color: var(--muted);
+        max-width: 640px;
+      }
+
+      .split {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 40px;
+        align-items: center;
+      }
+
+      .stack { display: grid; gap: 14px; }
+
+      .tag {
+        display: inline-flex;
+        align-items: center;
+        gap: 10px;
+        padding: 10px 14px;
+        border-radius: 12px;
+        border: 1px solid var(--edge);
+        background: rgba(255, 255, 255, 0.04);
+      }
+
+      .cards {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 20px;
+        margin-top: 32px;
+      }
+
+      .card {
+        background: var(--panel);
+        border: 1px solid var(--edge);
+        border-radius: 20px;
+        padding: 22px;
+        display: grid;
+        gap: 10px;
+        min-height: 220px;
+        position: relative;
+        transition: transform 180ms ease, border-color 180ms ease;
+      }
+
+      .card:hover { transform: translateY(-6px); border-color: rgba(0, 209, 178, 0.4); }
+
+      .card.featured {
+        border-color: rgba(0, 209, 178, 0.5);
+        box-shadow: 0 18px 40px rgba(0, 209, 178, 0.18);
+      }
+
+      .card small { color: var(--muted); }
+
+      .tabs {
+        display: flex;
+        gap: 10px;
+        margin: 24px 0 12px;
+        flex-wrap: wrap;
+      }
+
+      .tab {
+        padding: 8px 14px;
+        border-radius: 999px;
+        border: 1px solid var(--edge);
+        background: rgba(255, 255, 255, 0.04);
+        color: var(--muted);
+        cursor: pointer;
+      }
+
+      .tab.active {
+        border-color: rgba(0, 209, 178, 0.5);
+        color: #b8ffef;
+        background: rgba(0, 209, 178, 0.1);
+      }
+
+      .tab-content { display: none; }
+      .tab-content.active { display: block; }
+
+      .steps { display: grid; gap: 16px; margin-top: 24px; }
+
+      .step {
+        display: flex;
+        gap: 14px;
+        align-items: flex-start;
+      }
+
+      .step span {
+        width: 36px;
+        height: 36px;
+        border-radius: 12px;
+        background: #101621;
+        color: #b8ffef;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: 600;
+        border: 1px solid var(--edge);
+      }
+
+      .slider {
+        display: grid;
+        gap: 16px;
+        background: var(--panel);
+        border: 1px solid var(--edge);
+        border-radius: 20px;
+        padding: 22px;
+      }
+
+      .slider-controls {
+        display: flex;
+        gap: 10px;
+        align-items: center;
+        flex-wrap: wrap;
+      }
+
+      .slider-controls button {
+        border: 1px solid var(--edge);
+        background: transparent;
+        color: var(--ink);
+        border-radius: 10px;
+        padding: 6px 10px;
+        cursor: pointer;
+      }
+
+      .slider-dots {
+        display: flex;
+        gap: 8px;
+      }
+
+      .slider-dots span {
+        width: 8px;
+        height: 8px;
+        border-radius: 50%;
+        background: rgba(255, 255, 255, 0.2);
+      }
+
+      .slider-dots span.active { background: var(--accent); }
+
+      .tech-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+        gap: 16px;
+        margin-top: 24px;
+      }
+
+      .tech {
+        padding: 14px 16px;
+        border-radius: 14px;
+        background: rgba(255, 255, 255, 0.04);
+        border: 1px solid var(--edge);
+        text-align: center;
+        font-weight: 600;
+        transition: transform 160ms ease, border-color 160ms ease;
+      }
+
+      .tech:hover { transform: translateY(-4px); border-color: rgba(124, 92, 255, 0.6); }
+
+      .cta {
+        background: linear-gradient(130deg, rgba(18, 26, 37, 0.95), rgba(18, 34, 50, 0.95));
+        color: #f8fafc;
+        border-radius: 28px;
+        padding: 40px;
+        position: relative;
+        overflow: hidden;
+        border: 1px solid rgba(255, 255, 255, 0.08);
+      }
+
+      .cta::after {
+        content: "";
+        position: absolute;
+        inset: -30% auto auto -10%;
+        width: 300px;
+        height: 300px;
+        background: radial-gradient(circle, rgba(255, 122, 89, 0.35), transparent 70%);
+      }
+
+      .cta .btn.primary {
+        background: linear-gradient(120deg, var(--accent-2), #ff9b7a);
+        color: #1a0d08;
+      }
+
+      .contact-form {
+        display: grid;
+        gap: 12px;
+        margin-top: 18px;
+      }
+
+      .contact-form input,
+      .contact-form textarea {
+        width: 100%;
+        padding: 12px 14px;
+        border-radius: 12px;
+        border: 1px solid var(--edge);
+        background: rgba(255, 255, 255, 0.04);
+        color: var(--ink);
+        font-family: inherit;
+      }
+
+      .contact-form textarea { min-height: 120px; resize: vertical; }
+
+      .form-note { color: var(--muted); font-size: 0.9rem; }
+
+      footer {
+        padding: 60px 0 30px;
+        border-top: 1px solid var(--edge);
+      }
+
+      .footer-grid {
+        display: grid;
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+        gap: 24px;
+      }
+
+      .footer-grid a { color: var(--muted); }
+
+      .footer-bottom {
+        margin-top: 30px;
+        display: flex;
+        justify-content: space-between;
+        color: var(--muted);
+        font-size: 0.9rem;
+      }
+
+      .cookie-banner {
+        position: fixed;
+        inset: auto 24px 24px auto;
+        max-width: 420px;
+        background: var(--panel);
+        border: 1px solid var(--edge);
+        border-radius: 16px;
+        padding: 18px;
+        box-shadow: 0 20px 50px var(--shadow);
+        display: none;
+        z-index: 30;
+      }
+
+      .cookie-banner.show { display: block; }
+
+      .cookie-actions {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+        margin-top: 14px;
+      }
+
+      .toast {
+        position: fixed;
+        top: 80px;
+        right: 24px;
+        background: var(--panel);
+        border: 1px solid var(--edge);
+        border-radius: 12px;
+        padding: 12px 16px;
+        display: none;
+        z-index: 25;
+      }
+
+      .toast.show { display: block; }
+
+      .back-to-top {
+        position: fixed;
+        right: 24px;
+        bottom: 24px;
+        background: var(--panel);
+        border: 1px solid var(--edge);
+        border-radius: 999px;
+        padding: 10px 14px;
+        display: none;
+        z-index: 20;
+        cursor: pointer;
+      }
+
+      .reveal {
+        opacity: 0;
+        transform: translateY(18px);
+        transition: opacity 600ms ease, transform 600ms ease;
+      }
+
+      .reveal.visible { opacity: 1; transform: translateY(0); }
+
+      @media (max-width: 960px) {
+        .hero-grid, .split { grid-template-columns: 1fr; }
+        .cards { grid-template-columns: 1fr; }
+        .footer-grid { grid-template-columns: 1fr 1fr; }
+      }
+
+      @media (max-width: 720px) {
+        .nav-links {
+          position: absolute;
+          top: 64px;
+          right: 4vw;
+          background: var(--panel);
+          border: 1px solid var(--edge);
+          border-radius: 16px;
+          padding: 16px;
+          display: none;
+          flex-direction: column;
+        }
+
+        .nav-links.open { display: flex; }
+        .menu-btn { display: inline-flex; }
+        .hero-stats { flex-direction: column; }
+        .footer-grid { grid-template-columns: 1fr; }
+        .footer-bottom { flex-direction: column; gap: 10px; }
+        .cookie-banner { inset: auto 16px 16px 16px; max-width: none; }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="progress" id="progress"></div>
+    <div class="cursor-glow" id="cursorGlow"></div>
+    <div class="toast" id="toast">Aktion abgeschlossen.</div>
+    <button class="back-to-top" id="backToTop">Nach oben</button>
+
+    <header>
+      <div class="container nav">
+        <a class="brand" href="#home">
+          <span>MM</span>
+          MM Softwareentwicklung
+        </a>
+        <nav class="nav-links" id="navLinks">
+          <a class="active" href="#home">Startseite</a>
+          <a href="#about">Ueber mich</a>
+          <a href="#services">Leistungen</a>
+          <a href="#projects">Portfolio</a>
+          <a href="#contact" class="btn primary">Kontakt aufnehmen</a>
+        </nav>
+        <button class="menu-btn" id="menuBtn" aria-label="Menue oeffnen">Menu</button>
+      </div>
+    </header>
+
+    <main>
+      <section class="hero" id="home">
+        <div class="container hero-grid">
+          <div class="reveal">
+            <span class="pill">Verfuegbar fuer Projekte</span>
+            <h1>Software, die Immobilien und Teams nach vorn bringt.</h1>
+            <p>
+              Wir bauen digitale Systeme fuer Immobilien, Startups und KMU im Ruhrgebiet:
+              klare Prozesse, saubere Automatisierungen und messbare Ergebnisse.
+            </p>
+            <div class="hero-actions">
+              <a class="btn primary" href="#contact">Kostenloses Erstgespraech</a>
+              <a class="btn ghost" href="#projects">Referenzen ansehen</a>
+            </div>
+            <div class="hero-stats">
+              <div class="stat">
+                <strong data-count="6">0</strong>
+                Jahre Erfahrung in Automation
+              </div>
+              <div class="stat">
+                <strong data-count="58">0</strong>
+                Automations und Softwareprojekte
+              </div>
+            </div>
+          </div>
+          <div class="hero-card reveal">
+            <h3>Live Projektstatus</h3>
+            <p>Woechentliche Updates, klare Deliverables, klare Naechste Schritte.</p>
+            <div class="hero-terminal" id="heroTerminal">$ mm status --project "CleanTeam"
+<span>&gt; Automations: live</span>
+<span>&gt; Immobilien-CRM: sprint 3</span>
+<span>&gt; Release: 4 days</span>
+            </div>
+            <ul class="hero-list">
+              <li><span></span>Produktstrategie und MVP</li>
+              <li><span></span>Web- und Backendentwicklung</li>
+              <li><span></span>Automatisierung von Workflows</li>
+              <li><span></span>Wartung und Support</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <section id="about">
+        <div class="container split">
+          <div class="stack reveal">
+            <span class="pill">Ueber MM</span>
+            <h2 class="section-title">Praezise Loesungen fuer Immobilien und KMU</h2>
+            <p class="section-subtitle">
+              MM Softwareentwicklung steht fuer elegante Loesungen komplexer Probleme.
+              Wir verbinden technisches Fachwissen mit Branchenverstaendnis, um
+              Prozesse messbar zu verbessern - direkt aus dem Ruhrgebiet.
+            </p>
+            <div class="tag"><i class="fas fa-code"></i> Full-Stack Entwicklung</div>
+            <div class="tag"><i class="fas fa-cloud"></i> Cloud und Deployment</div>
+            <div class="tag"><i class="fas fa-shield-alt"></i> Datenschutz und Security</div>
+            <div class="tag"><i class="fas fa-building"></i> Immobilien-Workflows</div>
+          </div>
+          <div class="stack reveal">
+            <div class="card featured">
+              <strong>Erfahrung</strong>
+              <small>Automations, Portale und interne Tools.</small>
+            </div>
+            <div class="card">
+              <strong>Standort</strong>
+              <small>NRW, Ruhrgebiet - remote und vor Ort.</small>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="services">
+        <div class="container">
+          <span class="pill">Leistungen</span>
+          <h2 class="section-title">Professionelle IT-Dienstleistungen</h2>
+          <p class="section-subtitle">Massgeschneiderte Loesungen fuer Immobilien, Startups und KMU in NRW.</p>
+
+          <div class="tabs" id="serviceTabs">
+            <button class="tab active" data-tab="dev">Softwareentwicklung</button>
+            <button class="tab" data-tab="consult">IT-Beratung</button>
+            <button class="tab" data-tab="cloud">Cloud & DevOps</button>
+          </div>
+
+          <div class="tab-content active" data-tab="dev">
+            <div class="cards">
+              <div class="card">
+                <strong>Webplattformen</strong>
+              <small>Portale, Dashboards, CRM-Tools fuer Teams.</small>
+              </div>
+              <div class="card featured">
+                <strong>Automatisierungen</strong>
+              <small>Workflows, Integrationen, Fehler reduzieren, Zeit sparen.</small>
+              </div>
+              <div class="card">
+                <strong>API-Architektur</strong>
+              <small>Integrationen, Datenpipelines, sichere Schnittstellen.</small>
+              </div>
+            </div>
+          </div>
+
+          <div class="tab-content" data-tab="consult">
+            <div class="cards">
+              <div class="card">
+                <strong>Technologie-Assessment</strong>
+                <small>Quick-Check fuer Systeme, Risiken und Potenziale.</small>
+              </div>
+              <div class="card featured">
+                <strong>Digitale Roadmaps</strong>
+                <small>Priorisierung, Budget, klare KPIs.</small>
+              </div>
+              <div class="card">
+                <strong>Team Enablement</strong>
+                <small>Prozesse, Tooling, Produktqualitaet.</small>
+              </div>
+            </div>
+          </div>
+
+          <div class="tab-content" data-tab="cloud">
+            <div class="cards">
+              <div class="card">
+                <strong>Cloud Migration</strong>
+                <small>Sicher, skalierbar, kontrollierbar.</small>
+              </div>
+              <div class="card featured">
+                <strong>DevOps Pipelines</strong>
+                <small>CI/CD, Monitoring, stabile Releases.</small>
+              </div>
+              <div class="card">
+                <strong>Automatisierung</strong>
+                <small>Workflows, Integrationen, Alerts.</small>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="projects">
+        <div class="container split">
+          <div class="reveal">
+            <span class="pill">Portfolio</span>
+            <h2 class="section-title">Vom Konzept bis zum Release</h2>
+            <p class="section-subtitle">
+              Wir strukturieren Projekte in klare Phasen - schnell, transparent, planbar.
+            </p>
+            <div class="steps">
+              <div class="step">
+                <span>01</span>
+                <div>
+                  <strong>Analyse</strong>
+                  <p>Workshops, Ziele, KPIs.</p>
+                </div>
+              </div>
+              <div class="step">
+                <span>02</span>
+                <div>
+                  <strong>Design</strong>
+                  <p>UX-Flow, Prototyp, technische Architektur.</p>
+                </div>
+              </div>
+              <div class="step">
+                <span>03</span>
+                <div>
+                  <strong>Build</strong>
+                  <p>Sprints, QA, Deployment, Monitoring.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="slider reveal" id="projectSlider">
+            <strong id="slideTitle">PrimetimeAutomations</strong>
+            <p id="slideText">Automatisierte Prozesse fuer Teams mit klaren KPI Dashboards.</p>
+            <div class="slider-controls">
+              <button id="prevSlide">Zurueck</button>
+              <button id="nextSlide">Weiter</button>
+              <div class="slider-dots" id="sliderDots"></div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section>
+        <div class="container">
+          <span class="pill">Tech-Stack</span>
+          <h2 class="section-title">Technologien, mit denen wir arbeiten</h2>
+          <div class="tech-grid">
+            <div class="tech">JavaScript</div>
+            <div class="tech">Python</div>
+            <div class="tech">React</div>
+            <div class="tech">Node.js</div>
+            <div class="tech">PostgreSQL</div>
+            <div class="tech">Docker</div>
+            <div class="tech">Git</div>
+            <div class="tech">REST/GraphQL</div>
+          </div>
+        </div>
+      </section>
+
+      <section id="contact">
+        <div class="container">
+          <div class="cta reveal">
+            <h2>Bereit fuer Ihr naechstes System?</h2>
+            <p>Wir klaeren in 30 Minuten Scope, Ziele und einen realistischen Startplan.</p>
+            <div class="hero-actions">
+              <button class="btn primary" id="copyEmail">E-Mail kopieren</button>
+              <a class="btn ghost" href="tel:+4917672762444">Anrufen</a>
+            </div>
+            <form class="contact-form" id="contactForm">
+              <input type="text" name="name" placeholder="Ihr Name" required />
+              <input type="email" name="email" placeholder="Ihre E-Mail" required />
+              <textarea name="message" placeholder="Kurz Ihr Projekt" required></textarea>
+              <button class="btn primary" type="submit">Nachricht senden</button>
+              <span class="form-note">Rueckmeldung innerhalb von 24 Stunden.</span>
+            </form>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer>
+      <div class="container">
+        <div class="footer-grid">
+          <div>
+            <div class="brand"><span>MM</span>MM Softwareentwicklung</div>
+            <p class="section-subtitle">Softwareentwicklung und Automatisierungen aus NRW.</p>
+          </div>
+          <div>
+            <strong>Schnellzugriff</strong>
+            <div class="stack">
+              <a href="#home">Startseite</a>
+              <a href="#about">Ueber mich</a>
+              <a href="#services">Leistungen</a>
+              <a href="#projects">Portfolio</a>
+              <a href="#contact">Kontakt</a>
+            </div>
+          </div>
+          <div>
+            <strong>Leistungen</strong>
+            <div class="stack">
+              <a href="#services">Softwareentwicklung</a>
+              <a href="#services">IT-Beratung</a>
+              <a href="#services">Cloud-Loesungen</a>
+              <a href="#services">Sicherheit</a>
+            </div>
+          </div>
+          <div>
+            <strong>Kontakt</strong>
+            <div class="stack">
+              <a href="mailto:info@mmsoftwareentwicklung.de">info@mmsoftwareentwicklung.de</a>
+              <a href="tel:+4917672762444">+49 176 72762444</a>
+            </div>
+          </div>
+        </div>
+        <div class="footer-bottom">
+          <span>? <span id="year"></span> MM Softwareentwicklung. Alle Rechte vorbehalten.</span>
+          <span><a href="#impressum">Impressum</a> - <a href="#datenschutz">Datenschutz</a> - <a href="#cookies">Cookies</a></span>
+        </div>
+      </div>
+    </footer>
+
+    <section id="impressum">
+      <div class="container">
+        <span class="pill">Impressum</span>
+        <h2 class="section-title">Angaben gemaess TMG</h2>
+        <div class="cards">
+          <div class="card">
+            <strong>MM Softwareentwicklung GbR</strong>
+            <small>Krupp Str. 212, 45472 Muelheim an der Ruhr</small>
+          </div>
+          <div class="card featured">
+            <strong>Vertretungsberechtigt</strong>
+            <small>Mertkaan Pak, Mert Guelmez</small>
+          </div>
+          <div class="card">
+            <strong>Kontakt</strong>
+            <small>info@mmsoftwareentwicklung.de - +49 176 72762444</small>
+          </div>
+        </div>
+        <div class="cards" style="margin-top:16px;">
+          <div class="card">
+            <strong>Geschaeftsanschrift</strong>
+            <small>Mert Guelmez, Muelheimer Str. 15, 45145 Essen</small>
+          </div>
+          <div class="card">
+            <strong>USt-IdNr.</strong>
+            <small>Keine</small>
+          </div>
+          <div class="card">
+            <strong>Inhaltlich verantwortlich</strong>
+            <small>Mertkaan Pak</small>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="datenschutz">
+      <div class="container">
+        <span class="pill">Datenschutz</span>
+        <h2 class="section-title">Datenschutzerklaerung</h2>
+        <div class="stack">
+          <div class="card">
+            <strong>Verantwortlicher</strong>
+            <small>MM Softwareentwicklung GbR, Krupp Str. 212, 45472 Muelheim an der Ruhr</small>
+          </div>
+          <div class="card">
+            <strong>Kontakt Datenschutz</strong>
+            <small>info@mmsoftwareentwicklung.de</small>
+          </div>
+          <div class="card">
+            <strong>Hosting</strong>
+            <small>IONOS (Serverstandort EU/Deutschland)</small>
+          </div>
+          <div class="card">
+            <strong>Kontaktformular</strong>
+            <small>Anfragen werden zur Bearbeitung gespeichert und nach 30 Tagen geloescht.</small>
+          </div>
+          <div class="card">
+            <strong>Webanalyse</strong>
+            <small>Derzeit keine Webanalyse im Einsatz.</small>
+          </div>
+          <div class="card">
+            <strong>Rechte</strong>
+            <small>Auskunft, Berichtigung, Loeschung, Widerspruch, Datenuebertragbarkeit.</small>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="cookies">
+      <div class="container">
+        <span class="pill">Cookies</span>
+        <h2 class="section-title">Cookie-Hinweis</h2>
+        <div class="card">
+          <strong>Cookies</strong>
+          <small>Es werden nur technisch notwendige Cookies eingesetzt, um die Website-Funktion zu sichern.</small>
+        </div>
+      </div>
+    </section>
+
+    <div class="cookie-banner" id="cookieBanner" role="dialog" aria-live="polite">
+      <strong>Cookie-Einstellungen</strong>
+      <p>Wir verwenden nur technisch notwendige Cookies, um die Website-Funktion zu sichern.</p>
+      <div class="cookie-actions">
+        <button class="btn" id="rejectCookies">Nur Notwendige</button>
+        <button class="btn" id="saveCookies">Auswahl speichern</button>
+        <button class="btn primary" id="acceptCookies">Alle akzeptieren</button>
+      </div>
+    </div>
+
+    <script>
+      const menuBtn = document.getElementById("menuBtn");
+      const navLinks = document.getElementById("navLinks");
+      menuBtn.addEventListener("click", () => navLinks.classList.toggle("open"));
+
+      document.getElementById("year").textContent = new Date().getFullYear();
+
+      const cursorGlow = document.getElementById("cursorGlow");
+      window.addEventListener("mousemove", (event) => {
+        cursorGlow.style.left = event.clientX + "px";
+        cursorGlow.style.top = event.clientY + "px";
+      });
+
+      const progress = document.getElementById("progress");
+      window.addEventListener("scroll", () => {
+        const height = document.documentElement.scrollHeight - window.innerHeight;
+        const scrolled = (window.scrollY / height) * 100;
+        progress.style.width = scrolled + "%";
+      });
+
+      const revealElements = document.querySelectorAll(".reveal");
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) entry.target.classList.add("visible");
+        });
+      }, { threshold: 0.15 });
+      revealElements.forEach((el) => observer.observe(el));
+
+      document.querySelectorAll("[data-count]").forEach((counter) => {
+        const target = Number(counter.dataset.count || 0);
+        let current = 0;
+        const step = Math.max(1, Math.round(target / 60));
+        const tick = () => {
+          current = Math.min(target, current + step);
+          counter.textContent = current + "+";
+          if (current < target) requestAnimationFrame(tick);
+        };
+        tick();
+      });
+
+      const tabs = document.querySelectorAll(".tab");
+      const tabContents = document.querySelectorAll(".tab-content");
+      tabs.forEach((tab) => {
+        tab.addEventListener("click", () => {
+          tabs.forEach((t) => t.classList.remove("active"));
+          tabContents.forEach((content) => content.classList.remove("active"));
+          tab.classList.add("active");
+          document.querySelector(`.tab-content[data-tab='${tab.dataset.tab}']`).classList.add("active");
+        });
+      });
+
+      const slides = [
+        { title: "PrimetimeAutomations", text: "Automatisierte Prozesse fuer Teams mit klaren KPI Dashboards." },
+        { title: "CleanTeam", text: "Workflow-Automation fuer Planung, Aufgaben und Reporting." },
+        { title: "Pakora Automations", text: "End-to-end Automatisierung fuer Bestellungen, Daten und Reports." }
+      ];
+      let slideIndex = 0;
+      const slideTitle = document.getElementById("slideTitle");
+      const slideText = document.getElementById("slideText");
+      const dots = document.getElementById("sliderDots");
+      slides.forEach((_, index) => {
+        const dot = document.createElement("span");
+        if (index === 0) dot.classList.add("active");
+        dots.appendChild(dot);
+      });
+      const updateSlide = () => {
+        slideTitle.textContent = slides[slideIndex].title;
+        slideText.textContent = slides[slideIndex].text;
+        dots.querySelectorAll("span").forEach((dot, idx) => {
+          dot.classList.toggle("active", idx === slideIndex);
+        });
+      };
+      document.getElementById("prevSlide").addEventListener("click", () => {
+        slideIndex = (slideIndex - 1 + slides.length) % slides.length;
+        updateSlide();
+      });
+      document.getElementById("nextSlide").addEventListener("click", () => {
+        slideIndex = (slideIndex + 1) % slides.length;
+        updateSlide();
+      });
+
+      const toast = document.getElementById("toast");
+      const showToast = (message) => {
+        toast.textContent = message;
+        toast.classList.add("show");
+        setTimeout(() => toast.classList.remove("show"), 2000);
+      };
+
+      document.getElementById("copyEmail").addEventListener("click", async () => {
+        try {
+          await navigator.clipboard.writeText("info@mmsoftwareentwicklung.de");
+          showToast("E-Mail kopiert");
+        } catch (error) {
+          showToast("Konnte nicht kopieren");
+        }
+      });
+
+      const contactForm = document.getElementById("contactForm");
+      contactForm.addEventListener("submit", (event) => {
+        event.preventDefault();
+        showToast("Nachricht gesendet");
+        contactForm.reset();
+      });
+
+      const backToTop = document.getElementById("backToTop");
+      window.addEventListener("scroll", () => {
+        backToTop.style.display = window.scrollY > 600 ? "block" : "none";
+      });
+      backToTop.addEventListener("click", () => window.scrollTo({ top: 0, behavior: "smooth" }));
+
+      const sections = document.querySelectorAll("main section");
+      const navItems = document.querySelectorAll(".nav-links a");
+      window.addEventListener("scroll", () => {
+        let current = "home";
+        sections.forEach((section) => {
+          const top = section.offsetTop - 120;
+          if (window.scrollY >= top) current = section.id;
+        });
+        navItems.forEach((link) => {
+          link.classList.toggle("active", link.getAttribute("href") === `#${current}`);
+        });
+      });
+
+      const cookieBanner = document.getElementById("cookieBanner");
+      const showBanner = !localStorage.getItem("mmCookies");
+      if (showBanner) cookieBanner.classList.add("show");
+      const saveChoice = (value) => {
+        localStorage.setItem("mmCookies", value);
+        cookieBanner.classList.remove("show");
+      };
+      document.getElementById("rejectCookies").addEventListener("click", () => saveChoice("necessary"));
+      document.getElementById("saveCookies").addEventListener("click", () => saveChoice("custom"));
+      document.getElementById("acceptCookies").addEventListener("click", () => saveChoice("all"));
+    </script>
+  </body>
+</html>
