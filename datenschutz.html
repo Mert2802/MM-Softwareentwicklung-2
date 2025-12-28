@@ -1,0 +1,86 @@
+<!doctype html>
+<html lang="de" dir="ltr">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Datenschutz | MM Softwareentwicklung</title>
+    <meta name="description" content="Datenschutzerklaerung von MM Softwareentwicklung GbR." />
+    <meta name="theme-color" content="#0b0f14" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+    <style>
+      :root {
+        --bg: #0b0f14;
+        --panel: #121a25;
+        --ink: #e6edf3;
+        --muted: #9aa6b2;
+        --edge: rgba(255, 255, 255, 0.08);
+        --accent: #00d1b2;
+      }
+      * { box-sizing: border-box; }
+      body {
+        margin: 0;
+        font-family: "Sora", "Segoe UI", sans-serif;
+        color: var(--ink);
+        background: linear-gradient(180deg, #0b0f14, #0f1520);
+        min-height: 100vh;
+      }
+      a { color: inherit; text-decoration: none; }
+      .container { width: min(960px, 92vw); margin: 0 auto; padding: 64px 0; }
+      .card {
+        background: var(--panel);
+        border: 1px solid var(--edge);
+        border-radius: 20px;
+        padding: 22px;
+        margin-bottom: 16px;
+      }
+      .muted { color: var(--muted); }
+      .pill {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        padding: 6px 14px;
+        border-radius: 999px;
+        font-size: 0.72rem;
+        text-transform: uppercase;
+        letter-spacing: 0.18em;
+        color: #b8ffef;
+        border: 1px solid rgba(0, 209, 178, 0.4);
+        background: rgba(0, 209, 178, 0.1);
+      }
+      .back { margin-top: 24px; display: inline-flex; gap: 8px; color: var(--accent); }
+    </style>
+  </head>
+  <body>
+    <main class="container">
+      <span class="pill">Datenschutz</span>
+      <h1>Datenschutzerklaerung</h1>
+      <div class="card">
+        <strong>Verantwortlicher</strong>
+        <div class="muted">MM Softwareentwicklung GbR, Krupp Str. 212, 45472 Muelheim an der Ruhr</div>
+      </div>
+      <div class="card">
+        <strong>Kontakt Datenschutz</strong>
+        <div class="muted">info@mmsoftwareentwicklung.de</div>
+      </div>
+      <div class="card">
+        <strong>Hosting</strong>
+        <div class="muted">IONOS (Serverstandort EU/Deutschland)</div>
+      </div>
+      <div class="card">
+        <strong>Kontaktformular</strong>
+        <div class="muted">Anfragen werden zur Bearbeitung gespeichert und nach 30 Tagen geloescht.</div>
+      </div>
+      <div class="card">
+        <strong>Webanalyse</strong>
+        <div class="muted">Derzeit keine Webanalyse im Einsatz.</div>
+      </div>
+      <div class="card">
+        <strong>Rechte</strong>
+        <div class="muted">Auskunft, Berichtigung, Loeschung, Widerspruch, Datenuebertragbarkeit.</div>
+      </div>
+      <a class="back" href="index.html">Zurueck zur Startseite</a>
+    </main>
+  </body>
+</html>
